@@ -1,0 +1,145 @@
+\documentclass[12pt]{article}
+\usepackage{HomeWorkTemplate}
+\usepackage{circuitikz}
+\usepackage{tikz}
+\newcommand*\coin[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,draw,inner sep=2pt,minimum size=10mm] (char) {#1};}}
+\usepackage{float}
+\usepackage{xepersian}
+\usetikzlibrary{arrows,automata}
+\usetikzlibrary{circuits.logic.US}
+\settextfont{B Nazanin}
+\newcounter{problemcounter}
+\newcounter{subproblemcounter}
+\linespread{1.2}
+\setcounter{problemcounter}{1}
+\setcounter{subproblemcounter}{1}
+\newcommand{\grade}[1]{\textbf{(#1 نمره)}}
+\newcommand{\problem}[1]
+{
+\subsection*{
+مسأله‌ی
+\arabic{problemcounter} 
+\stepcounter{problemcounter}
+\setcounter{subproblemcounter}{1}
+#1
+}
+}
+\newcommand{\subproblem}{
+\textbf{\harfi{subproblemcounter})}\stepcounter{subproblemcounter}
+}
+\newcommand{\n}{
+
+\null
+
+}
+\begin{document}
+
+\handout
+{آمار و کاربردها}
+{}
+{۲۸ آذر 1398}
+{سری ۳}
+{۵ دی}
+علیرضا درویشی................................................................................................................................................................................. ۹۶۱۰۹۶۷۴
+\subsection*{مسأله ۱}
+با توجه به اینکه این بازه ی اطمینان با محاسباتی روی تعدادی متغیر تصادفی بدست آمده است، می توانیم متغیر تصادفی $z$ را تعریف کنیم که اگر  $\theta$ در بازه ی اطمینان قرار داشت، $z=1$ و در غیر این صورت $z=0$. حال $Pr(z=1)=0.95$ اگر بازه ی اطمینان ساخته شده، بازه ی اطمینان $95\%$ باشد.
+
+نحوه ی دیگر نگاه کردن به این مسئله این است که اگر تعداد زیادی بازه ی اطمینان $95\%$ بسازیم، فقط $95\%$ از بازه های اطمینان، $\theta $ را دربر می گیرند.
+\subsection*{مسأله‌ ۲}
+\begin{flushleft}
+$
+\begin{tabular}{  | c | c | c | c |}
+\hline
+ $diffrence$ & $spending\ after\ rise$     &        $spending\ before\ rise$   &  \\ \hline
+$42$ &  $542$ & $500$ &$ 1 $\\ \hline
+ $32$ & $403 $& $371$ & $2$ \\ \hline
+$-13$ &$ 591 $& $604$ & $3$ \\ \hline
+$-31$&  $39$ & $70$   & $4$ \\ \hline
+$11$ & $54$ & $43$   & $5$ \\ \hline
+$8.2$ & $-$ & $-$   & $mean$ \\ \hline
+$30.42$ & $-$ & $-$   & $s$ \\ \hline
+\end{tabular}
+$
+
+$
+\begin{cases}
+H_0& \mu=0 \\
+\neg H_0 &\mu\neq 0
+\end{cases}
+$
+
+$t_{4,0.05}=2.776\Rightarrow(-t_{4,0.05}s/\sqrt{5},t_{4,0.05}s/\sqrt{5})=(-37.7,37.7)$
+
+$
+p_{value}=1-Pr(|x|<8.2|\mu=0,\sigma=30.42/\sqrt{5})$
+
+$=1-Pr(|T|<0.60|T \sim t-student(df=4,\mu=0,\sigma=1))=0.58>0.05$
+
+\end{flushleft}
+پس فرض صفر رد نمی شود
+\subsection*{مسأله‌ی ۳}
+الف)
+\begin{flushleft}
+$
+\begin{cases}
+H_0& \mu=75 \\
+\neg H_0 &\mu= 80
+\end{cases}
+$
+
+$s=3.20\ , df=9$
+
+$mean=76.91$
+
+$p_{value}=Pr(x>76.91|\mu=75)=Pr(\frac{x-75}{\frac{3.2}{\sqrt{10}}}>0.378125)$
+
+$=Pr(T>1.89|T\sim t-student(df=9,\mu=0,\sigma=1))=0.046<0.05$
+
+\end{flushleft}
+پس فرض صفر را می توان رد کرد
+
+ب)
+\begin{flushleft}
+$T=\frac{76.91-80}{3.20/\sqrt{10}}=-3.05$
+
+$\beta=Pr(T<-3.05|T\sim t-student(df=9))=0.0069$
+\end{flushleft}
+\subsection*{مسأله‌ی 4}
+\begin{flushleft}
+$
+\begin{cases}
+H_0 & \pi_1-\pi_2=0 \\
+\neg H_0 & \pi_1-\pi_2 \neq 0
+\end{cases}
+$
+
+$P_1=\frac{17}{17+584}=0.028,\ P_2=\frac{23}{23+376}=0.058$
+
+$\pi=P_1-P_2\Rightarrow Var(\pi)=Var(P_1)+Var(P_2)\Rightarrow Var(\pi)=\frac{P_1(1-P_1)}{n_1}+\frac{P_2(1-P_2)}{n_2}$
+
+$\Rightarrow \pi \in (-z_{0.05}\sqrt{Var(\pi)},z_{0.05}\sqrt{Var(\pi)}) \rightarrow H_0\ is \ not\ rejected\ with \ 90\% \ confidence $
+
+$z_{0.05}=1.64\Rightarrow 90\% \ confidence \ interval\ :\ (-0.022,0.022),\ \pi=-0.03$
+
+$\Rightarrow H_0\ is\ rejected$
+\end{flushleft}
+\subsection*{مسأله‌ی ۵}
+\begin{flushleft}
+$\Pi=0.34$
+
+$
+\begin{cases}
+H_0 & \pi=\Pi \\
+\neg H_0 & \pi < \Pi
+\end{cases}
+$
+
+$P=0.23$
+
+$Z=\frac{P-\Pi}{\sqrt{\frac{P(1-P)}{n}}}$
+
+$Z=-6.13\Rightarrow p_{value}=Pr(z<-6.13)=4\times 10^{-10}<0.04\Rightarrow H_0\ is\ rejected\ with\ 96\% \ confidence $
+\end{flushleft}
+پس تحصیل در خارج از کشور (با قطعیت ۹۶ درصد) در احتمال قبولی تاثیر دارد.
+\end{document}

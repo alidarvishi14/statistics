@@ -1,0 +1,105 @@
+\documentclass[12pt]{article}
+\usepackage{HomeWorkTemplate}
+\usepackage{circuitikz}
+\usepackage{tikz}
+\newcommand*\coin[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,draw,inner sep=2pt,minimum size=10mm] (char) {#1};}}
+\usepackage{float}
+\usepackage{xepersian}
+\usetikzlibrary{arrows,automata}
+\usetikzlibrary{circuits.logic.US}
+\settextfont{B Nazanin}
+\newcounter{problemcounter}
+\newcounter{subproblemcounter}
+\linespread{1.2}
+\setcounter{problemcounter}{1}
+\setcounter{subproblemcounter}{1}
+\newcommand{\grade}[1]{\textbf{(#1 نمره)}}
+\newcommand{\problem}[1]
+{
+\subsection*{
+مسأله‌ی
+\arabic{problemcounter} 
+\stepcounter{problemcounter}
+\setcounter{subproblemcounter}{1}
+#1
+}
+}
+\newcommand{\subproblem}{
+\textbf{\harfi{subproblemcounter})}\stepcounter{subproblemcounter}
+}
+\newcommand{\n}{
+
+\null
+
+}
+\begin{document}
+
+\handout
+{آمار و کاربردها}
+{}
+{15 آبان 1398}
+{سری 2}
+{17 آبان}
+علیرضا درویشی................................................................................................................................................................................. ۹۶۱۰۹۶۷۴
+\subsection*{مسأله ۱}
+\begin{flushleft}
+$Var(X)=E[X^2]-E^2[X]=\int_{-2+\theta}^{2+\theta} \frac{1}{4}x^2dx-\int_{-2+\theta}^{2+\theta} \frac{1}{4}xdx=
+\frac{1}{12}((\theta+2)^3-(\theta-2)^3)-\frac{1}{8}((\theta+2)^2-(\theta-2)^2)=
+\frac{4}{3}$
+
+$z=\sum_{i=1}^n x_i/n\Rightarrow Var(z)=\frac{1}{n}Var(x)=\frac{4}{3n}$
+
+$\Rightarrow \theta=30\pm1.96 \sqrt{\frac{4}{300}}=30\pm 0.23\  ,\ with\ 95\% \ confidence$
+\end{flushleft}
+
+\subsection*{مسأله‌ ۲}
+\begin{flushleft}
+$Z=\sum_{i=1}^nx_i/n$
+
+$E[Z-\theta]=E[Z]-\theta=\frac{1}{n}E[\sum_ix_i]-\theta=\frac{1}{n}n\theta-\theta=0$
+
+$Var(X)=\theta^2\Rightarrow \sigma_x=\theta$
+
+$SE(Z)=\frac{\sigma_x}{\sqrt{n}}=\frac{\theta}{\sqrt{n}}=\frac{1}{n\sqrt{n}}\sum_{i=1}^nx_i$
+\end{flushleft}
+\subsection*{مسأله‌ی ۳}
+الف)
+راه اول:
+\begin{flushleft}
+$\int_{z=-x}^x \frac{1}{\sqrt{2\pi}}e^{\frac{-z^2}{2}}dz=0.9\Rightarrow x=1.64$
+
+$Var(X)=\theta^2\Rightarrow \sigma_x=\theta \Rightarrow Var(z=\sum_i x_i/n)=\frac{1}{n}\theta^2\Rightarrow \sigma_z=\frac{1}{\sqrt{n}}\theta$
+
+$\theta=\frac{\sum_{i=1}^n x_i}{n}\pm 1.64 \frac{\sum_{i=1}^n x_i}{n\sqrt{n}}\  ,\ with\ 90\% \ confidence$
+\end{flushleft}
+راه دوم:
+\begin{flushleft}
+\lr{First let us prove that if X follows an exponential distribution with parameter 2
+$\lambda$, then Y = 2$\lambda$X follows an exponential distribution with parameter 1/2, i.e. $\chi^2$. The density function for X is f(x|$\lambda$) = $\lambda e^{-\lambda x }$ if x > 0 and 0 otherwise. It is easy to see the density function for Y is $g(y) = \frac{1}{2} e^{-y/2} $for y > 0, and g(y) = 0 otherwise. Therefore Y has an exponential distribution with parameter 1/2, i.e. chi-square distribution with degree of freedom 2.}
+
+\lr{Now, let us first find a pivot, define}
+
+$$h(X_1,X_2,..,X_n,\lambda)=2\lambda \sum X_i=\sum Y_i$$
+
+\lr{and each $Y_i = 2\lambda X_i$ follows $\chi^2$ distribution, and they are independent. Therefore h follows
+$\chi_n^2$ distribution.
+Let $\chi^2_n(\alpha/2)$ and $\chi^2_n(1-\alpha/2)$ be the $(\alpha/2)$ × 100-th and $(1-\alpha/2)$ × 100-th percentiles,
+respectively. Then}
+
+$$P(\chi_{2n}^2(\alpha/2)\leq2\lambda \sum X_i \leq \chi_{2n}^2(1-\alpha/2))=1-\alpha$$
+
+$$P(\frac{2\sum X_i}{\chi_{2n}^2(1-\alpha/2)} \leq \theta  \leq \frac{2\sum X_i}{\chi_{2n}^2(\alpha/2)})=1-\alpha$$
+\end{flushleft}
+
+ب)
+\begin{flushleft}
+$\theta \in (l(x),\infty), \ with\ 95\% \ confidence$
+
+$\alpha=0.95$
+
+$\alpha=pr(l(x)<\theta)=pr(x<l^{-1}(\theta))=\frac{l^{-1}(\theta)}{\theta}\Rightarrow l^{-1}(\theta)=\alpha\theta\Rightarrow l(x)=\frac{x}{\alpha}=\frac{1}{0.95}x$
+
+$\Rightarrow \theta\geq 1.052x , \ with \ 95\% \ confidence$
+\end{flushleft}
+\end{document}

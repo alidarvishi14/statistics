@@ -1,0 +1,228 @@
+\documentclass[12pt]{article}
+\usepackage{HomeWorkTemplate}
+\usepackage{circuitikz}
+\usepackage{tikz}
+\newcommand*\coin[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,draw,inner sep=2pt,minimum size=10mm] (char) {#1};}}
+\usepackage{float}
+\usepackage{xepersian}
+\usetikzlibrary{arrows,automata}
+\usetikzlibrary{circuits.logic.US}
+\settextfont{B Nazanin}
+\newcounter{problemcounter}
+\newcounter{subproblemcounter}
+\linespread{1.2}
+\setcounter{problemcounter}{1}
+\setcounter{subproblemcounter}{1}
+\newcommand{\grade}[1]{\textbf{(#1 نمره)}}
+\newcommand{\problem}[1]
+{
+\subsection*{
+مسأله‌ی
+\arabic{problemcounter} 
+\stepcounter{problemcounter}
+\setcounter{subproblemcounter}{1}
+#1
+}
+}
+\newcommand{\subproblem}{
+\textbf{\harfi{subproblemcounter})}\stepcounter{subproblemcounter}
+}
+\newcommand{\n}{
+
+\null
+
+}
+\begin{document}
+
+\handout
+{احتمال و کاربرد}
+{}
+{8 آبان 1398}
+{سری 1}
+{14 آبان}
+علیرضا درویشی................................................................................................................................................................................. ۹۶۱۰۹۶۷۴
+\subsection*{مسأله ۱}
+الف)
+\begin{flushleft}
+$P(B_i | A)=\frac{P(B_i)P(A|B_i)}{\sum_{j=1}^{j=k}P(B_j)P(A|B_i)}$
+
+$P(1st\ black | 2nd \ red)=\frac{P(1st\ black)P(2nd\ red|1st\ black)}{P(1st\ black)P(2nd\ red|1st\ black)+P(1st\ red)P(2nd\ red|1st\ red)}$
+
+$\Rightarrow P(1st\ black | 2nd \ red)=\frac{\frac{b}{r+b}\frac{r}{r+b+c}}{\frac{b}{r+b}\frac{r}{r+b+c}+\frac{r}{r+b}\frac{r+c}{r+b+c}}=\frac{b}{r+b+c}$
+
+
+\end{flushleft}
+ب)
+\begin{flushleft}
+$for \ i\ : A_i= \{i\in A\ \& i\in B\} \parallel \{i\notin A\ \& i\in B\} \parallel \{i\notin A\ \& i\notin B\}$
+
+$for \ i\ : p(A_i)=\frac{3}{4}$
+
+$p(\bigcap^n_{i=1}A_i)=(\frac{3}{4})^n$
+\end{flushleft}
+
+
+ج)
+
+\begin{flushleft}
+$p(E|E\cup F)=\frac{p(E\cap (E\cup F))}{p(E\cup F)}\frac{p(E)}{p(E\cup F)}=\frac{p(E\cap F)+p(E\cap F^c)}{p(F)+p(E\cap F^c)}\geq \frac{p(E\cap F)}{p(F)}=p(E|F) $
+
+
+
+\end{flushleft}
+
+\subsection*{مسأله‌ ۲}
+\begin{flushleft}
+$\overbrace{\coin{$?$}\coin{$?$}\coin{$?$}....\coin{$?$}}^\text{$n$} : \coin{$H$}\coin{$T$}\overbrace{\coin{$?$}....\coin{$?$}}^\text{$n-2$}\ or\ \coin{$T$}\overbrace{\coin{$?$}\coin{$?$}....\coin{$?$}}^\text{$n-1$}$
+
+$ $
+
+$\Rightarrow f_n=f_{n-1}+f_{n-2}$
+
+$f_0=1$
+
+$f_1=2$
+
+\end{flushleft}
+\subsection*{مسأله‌ی ۳}
+\begin{flushleft}
+$n_A: \ number\ of \ heads\ in \ A$
+
+$n_B: \ number\ of \ heads\ in \ B$
+
+$p(n_A=n_B)=\sum_j p(n_A=j,n_B=j)=\sum_j p(n_A=j)p(n_B=j)=\sum_j (\frac{1}{2})^k \binom{k}{j} (\frac{1}{2})^{n-k} \binom{n-k}{j}=(\frac{1}{2})^n \sum_j \binom{k}{j}\binom{n-k}{j}=(\frac{1}{2})^n\binom{n}{k}=p(n_A+n_B=k)$
+\end{flushleft}
+\subsection*{مسأله‌ی ۴}
+\begin{flushleft}
+$p(X=x)=
+\frac{n}{n+m}\frac{n-1}{n+m-1}...\frac{n-(x-1)}{n+m-(x-1)}\times\frac{m}{n+m-x}=
+\frac{m}{n+m-x}\frac{\frac{n!}{(n-x)!}}{\frac{(n+m)!}{(n+m-x)!}}=
+\frac{m}{n+m-x}\frac{\frac{(n+m-x)!}{(n-x)!}}{\frac{(n+m)!}{n!}}=
+\frac{m}{n+m-x}\frac{\binom{n+m-x}{m}}{\binom{n+m}{m}}=
+\frac{\binom{n+m-1-x}{m-1}}{\binom{n+m}{m}}$
+
+$E[X]=\sum_{x=1}^{n} xp(X=x)=
+\sum_{x=1}^{n} x \frac{\binom{n+m-1-x}{m-1}}{\binom{n+m}{m}}=
+\frac{1}{\binom{n+m}{m}}\sum_{x=1}^{n} x \binom{n+m-1-x}{m-1}=
+\frac{1}{\binom{n+m}{m}}\sum_{j=1}^{n} \underbrace{\sum_{x=j}^{n} \binom{n+m-1-x}{m-1}}_{\sum_{k=m}^n \binom{k}{m}=\binom{n+1}{m+1}}=
+\frac{1}{\binom{n+m}{m}}\sum_{j=1}^{n} \binom{m-1+n-j+1}{m-1+1}=
+\frac{1}{\binom{n+m}{m}} \underbrace{\sum_{j=1}^{n} \binom{m+n-j}{m}}_{\sum_{k=m}^n \binom{k}{m}=\binom{n+1}{m+1}}=
+\frac{1}{\binom{n+m}{m}} \binom{n+m}{m+1}=\frac{\frac{(n+m)!}{(m+1)!(n-1)!}}{\frac{(n+m)!}{n!m!}}=
+\boxed{\frac{n}{m+1}}$
+
+\end{flushleft}
+\subsection*{مسأله‌ ۵}
+\begin{flushleft}
+$f(x)=e^{-x^2/2}$
+
+$f_1(x)=(1+\frac{1}{x^2})e^{-x^2/2}$
+
+$f_2(x)=\frac{x^4+2x^2-1}{x^4+2x^2+1}e^{-x^2/2}$
+
+$\Rightarrow f_2(x)\leq f(x) \leq f_1(x) \Rightarrow \int_x^{\infty}f_2(y)dy\leq\int_x^{\infty}f(y)dy\leq\int_x^{\infty}f_1(y)dy$
+
+$\Rightarrow \frac{1}{\sqrt{2\pi}}\frac{x}{x^2+1}e^{-\frac{x^2}{2}}\leq p(Z\geq x)\leq \frac{1}{\sqrt{2\pi}}\frac{1}{x}e^{-\frac{x^2}{2}}$
+\end{flushleft}
+\subsection*{مسأله‌ ۶}
+الف)
+\begin{flushleft}
+$J=
+\begin{pmatrix} 
+\partial x \\
+\partial y
+\end{pmatrix}
+\begin{pmatrix} 
+U & V
+\end{pmatrix}
+=
+\begin{pmatrix} 
+U_x & V_x \\
+U_y & V_y
+\end{pmatrix}
+=
+\begin{pmatrix} 
+y & 1/y\\
+x& -x/y^2
+\end{pmatrix}
+=
+-2x/y=-2V
+$
+
+$g(U,V)=f(x,y)\frac{1}{|J|}=\frac{1}{2U^2V}$
+
+$g(U,V)= \begin{cases} 
+      \frac{1}{2U^2V} & 0< V\  \& \ max(V,\frac{1}{V}) \leq U \\
+      0 & else
+   \end{cases}
+$
+
+\end{flushleft}
+ب)
+\begin{flushleft}
+$f_U(U)=\int_{V=\frac{1}{U}}^{U} g(U,V)dV=\frac{1}{U^2}ln(U)$
+
+$f_V(V)=\int_{U} g(U,V)dV$
+
+$f_V(V)=\begin{cases} 
+      \int_{U=V}^{\infty} g(U,V)dU=\frac{1}{2V^2} & V\geq 1 \\
+      \int_{U=\frac{1}{V}}^{\infty} g(U,V)dU=\frac{1}{2} & 0<V \leq 1
+   \end{cases}$
+\end{flushleft}
+\subsection*{مسأله‌ ۷}
+\begin{flushleft}
+$E[X_1+X_2+..+X_n|X_1+X_2+..+X_n=x]=x$
+
+$E[X_1+X_2+..+X_n|X_1+X_2+..+X_n=x]=E[X_1|X_1+X_2+..+X_n=x]+E[X_2|X_1+X_2+..+X_n=x]+..+E[X_n|X_1+X_2+..+X_n=x]=nE[X_1|X_1+X_2+..+X_n=x]$
+
+$\Rightarrow E[X_1|X_1+X_2+..+X_n=x]=\frac{x}{n}$
+\end{flushleft}
+\subsection*{مسأله‌ ۸}
+الف)
+\begin{flushleft}
+$x_i:\begin{cases} 
+      1 & ith\ ball\ is\ red \\
+      0 & else
+   \end{cases},\ 
+X=\sum_{i=1}^{12}{x_i} \ $
+
+$y_i:\begin{cases} 
+      1 & ith\ ball\ is\ blue \\
+      0 & else
+   \end{cases},\ 
+Y=\sum_{i=1}^{12}{y_i} \ $
+
+
+$Cov(X,Y)=E[XY]-E[X]E[Y]=E[\sum x_i \sum y_j]-E[\sum x_i]E[\sum y_i]$
+
+$E[\sum x_i\sum y_i]=E[\sum x_iy_i]+E[\sum_{i\neq j}x_iy_j]=\sum \underbrace{E[x_iy_i]}_{=0}+\sum_{i\neq j}E[x_iy_j]$
+
+$=12\times11\times E[x_i]E[y_i]$
+
+$ Cov(X,Y)=(12\times 11-12\times 12)E[x_i]E[y_i]=-12E[x_i]E[y_i]=-12\frac{12\times10}{30}\frac{12\times8}{30}=\boxed{-153.6}$
+\end{flushleft}
+ب)
+\begin{flushleft}
+$E[XY]=\iint_{x,y}xyf(x,y)dx dy=\frac{1}{2}\int_{y=0}^{\pi/2}ydy\{\int_{x=0}^{\pi/2}xsin(x+y)dx\}=
+\frac{1}{2}\int_{y=0}^{\pi/2}y\{\frac{1}{2}(\pi-2)sin(y)+cos(y)\}dy=
+\frac{\pi-2}{2}$
+
+$E[X]=\iint_{x,y}xf(x,y)dx dy=\frac{1}{2}\int_{y=0}^{\pi/2}dy\{\int_{x=0}^{\pi/2}xsin(x+y)dx\}=
+\frac{1}{2}\int_{y=0}^{\pi/2}\{\frac{1}{2}(\pi-2)sin(y)+cos(y)\}dy=
+\frac{\pi}{4}$
+
+$E[X^2]=\iint_{x,y}x^2f(x,y)dx dy=\frac{1}{2}\int_{y=0}^{\pi/2}dy\{\int_{x=0}^{\pi/2}x^2sin(x+y)dx\}=
+\frac{1}{8}(\pi^2+4\pi-16)$
+
+$\sigma_x^2=E[X^2]-E^2[X]=\frac{1}{16}(\pi^2+8\pi-32)$
+
+$Cov(X,Y)=(\frac{\pi-2}{2})-\frac{\pi^2}{16}$
+
+$\rho(X,Y)=\frac{(\frac{\pi-2}{2})-\frac{\pi^2}{16}}{\frac{1}{16}(\pi^2+8\pi-32)}=-0.25\neq -1$
+
+\end{flushleft}
+\subsection*{مسأله ‌9}
+\begin{flushleft}
+$p(|X- \mu |> \epsilon)=\frac{VAR(X)}{\epsilon^2}=\frac{VAR(X)}{n\epsilon^2}=\frac{\mu (1-\mu)}{n\epsilon^2}\leq \frac{1}{4} \frac{1}{n\epsilon^2} \leq 1-\eta\Rightarrow n\geq \frac{1}{4(1-\eta)\epsilon^2}=62500$
+\end{flushleft}
+\end{document}

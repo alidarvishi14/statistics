@@ -1,0 +1,153 @@
+\documentclass[12pt]{article}
+\usepackage{HomeWorkTemplate}
+\usepackage{circuitikz}
+\usepackage{tikz}
+\newcommand*\coin[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,draw,inner sep=2pt,minimum size=10mm] (char) {#1};}}
+\usepackage{float}
+\usepackage{xepersian}
+\usetikzlibrary{arrows,automata}
+\usetikzlibrary{circuits.logic.US}
+\settextfont{B Nazanin}
+\newcounter{problemcounter}
+\newcounter{subproblemcounter}
+\linespread{1.2}
+\setcounter{problemcounter}{1}
+\setcounter{subproblemcounter}{1}
+\newcommand{\grade}[1]{\textbf{(#1 نمره)}}
+\newcommand{\problem}[1]
+{
+\subsection*{
+مسأله‌ی
+\arabic{problemcounter} 
+\stepcounter{problemcounter}
+\setcounter{subproblemcounter}{1}
+#1
+}
+}
+\newcommand{\subproblem}{
+\textbf{\harfi{subproblemcounter})}\stepcounter{subproblemcounter}
+}
+\newcommand{\n}{
+
+\null
+
+}
+\begin{document}
+
+\handout
+{آمار و کاربردها}
+{}
+{۲۶ دی 1398}
+{سری ۳}
+{۱۰ بهمن}
+علیرضا درویشی................................................................................................................................................................................. ۹۶۱۰۹۶۷۴
+\subsection*{مسأله ۱}
+الف)
+\begin{flushleft}
+$Y_i=\alpha+\beta X_i=\alpha+\beta(x_i+\bar{X})=(\alpha+\beta \bar{X})+\beta x_i=\alpha'+\beta x_i$
+
+$b=\frac{\sum{x_iy_i}}{\sum{x_i^2}}=\frac{\sum{x_i(y_i+\bar{Y}-\bar{Y})}}{\sum{x_i^2}}=\frac{\sum{x_iY_i}}{\sum{x_i^2}}-\frac{\sum{x_i\bar{Y}}}{\sum{x_i^2}}=\frac{\sum{x_iY_i}}{\sum{x_i^2}}$
+
+$w_i=\frac{x_i}{\sum{x_i^2}}\Rightarrow b=\sum{w_iY_i}$
+
+$ \Rightarrow E[b]=\sum{w_iE[Y_i]}=\sum{w_i(\alpha'+\beta x_i)}=\sum{w_i\alpha'+\beta w_i x_i}=\alpha'\sum{w_i}+\beta \sum{w_ix_i}=\beta \frac{\sum{x_ix_i}}{x_i^2}=\beta\frac{\sum{x_i^2}}{\sum{x_i^2}}=\beta$
+
+$a=\bar{Y}-b\bar{X}$
+
+$\Rightarrow E[a]=E[\bar{Y}]-E[b]\bar{X}=\frac{1}{n}\sum{E[Y_i]}-\beta \bar{X}=\frac{1}{n}\sum({\alpha'+\beta x_i})-\beta \bar{X}=\alpha'-\beta \bar{X}=\alpha$
+\end{flushleft}
+ب)
+\begin{flushleft}
+$Cov(a,b)=E[ab]-E[a]E[b]=E[(\bar{Y}-b \bar{X})b]-E[\bar{Y}-b \bar{X}]E[b]=E[b\bar{Y}]-\bar{X}E[b^2]-E[b]E[\bar{Y}]+\bar{X}E^2[b]=E[b\bar{Y}]-E[b]E[\bar{Y}]-\bar{X}Var[b]$
+
+$Var[b]=Var[\sum{w_iY_i}]=\sum{w_i^2\sigma^2}=\sigma^2\sum{\frac{x_i^2}{(\sum{x_i^2})^2}}=\frac{\sigma^2}{\sum{x_i^2}}$
+
+$E[Y_jb]=E[Y_j\sum{w_iY_i}]=E[\sum_{i\neq j}{w_iY_iY_j}]+E[w_jY_j^2]=E[Y_j]\sum_{i \neq j}{w_iY_i}+{w_jE[Y_j^2]}=E[Y_j]\sum_{i \neq j}{w_iY_i}+{w_jE[Y_j^2]}-{w_jE^2[Y_j]}+{w_jE^2[Y_j]}=E[Y_j]\sum{w_iE[Y_i]}+w_j\sigma^2=\beta E[Y_j]+w_j\sigma^2\Rightarrow E[\bar{Y}b]=\frac{1}{n}\sum{E[Y_jb]}=\bar{Y}\beta$
+
+$\Rightarrow Cov(a,b)=\bar{Y}\beta-\bar{Y}\beta-\bar{X}\frac{\sigma^2}{\sum x_i^2}=-\frac{\sigma^2\bar{X}}{\sum x_i^2}$
+\end{flushleft}
+\subsection*{مسأله‌ ۲}
+الف)
+\begin{flushleft}
+$y'_{ij}=\beta_0+\beta_1x_i+e'_i \ : jth\ data\ in\ x_i$
+
+$y_i=\frac{\sum_j{y'_{ij}}}{n_i}\Rightarrow E[y_i]=\beta_0+\beta_1x_i\ ,\ Var[y_i]=\frac{1}{n_i^2}\sum{Var[y']}=\frac{1}{n_i}\sigma^2=\rho_i^2\sigma^2\Rightarrow n_i=\frac{1}{\rho_i^2}$
+\end{flushleft}
+ب)
+شرط واریانس ثابت و میانگین صفرِ انحراف از خط با توجه به قسمت قبلی برقرار است
+شرط خطی بودن به وضوح از صورت معادله برقرار است
+شرط استقلال انحراف از خط هم با توجه به قسمت قبلی برقرار است.
+
+ج)
+\begin{flushleft}
+$s=\sum(z_i-b_0u_i-b_1v_i)^2$
+
+$\Rightarrow \frac{ds}{db_0}=0\Rightarrow \sum u_i(z_i-b_0u_i-b_1v_i)=0$
+
+$ \frac{ds}{db_1}=0\Rightarrow \sum v_i(z_i-b_0u_i-b_1v_i)=0$
+
+$\Rightarrow b_0=\frac{\sum{v_i^2}\sum{z_iu_i}-\sum{z_iv_i}\sum{u_iv_i}}{(\sum{u_i^2})(\sum{v_i^2})-(\sum{u_iv_i})^2},b_1=\frac{\sum u_i^2\sum z_iv_i-\sum z_iu_i \sum u_iv_i}{(\sum{u_i^2})(\sum{v_i^2})-(\sum{u_iv_i})^2}$
+\end{flushleft}
+
+د)
+\begin{flushleft}
+$s=\sum (z_i-b_0u_i-b_1v_i)^2=\sum (\rho_i^{-1}y_i-b_0\rho_i^{-1}-b_1\rho_i^{-1}x_i)^2=\sum(y_i-b_0-b_1x_i)^2\rho_i^{-2}$
+\end{flushleft}
+
+ه)
+\begin{flushleft}
+$b_0=\sum{w_iz_i},w_i=\frac{u_i\sum v^2_j-v_i\sum u_j v_j}{(\sum{u_j^2})(\sum{v_j^2})-(\sum{u_jv_j})^2}\Rightarrow Var(b_0)=\sum{w_i^2Var(z_i)}=\sigma^2\sum w^2_i$
+
+$\sum w_i^2=\sum \frac{u_i^2(\sum v_j^2)^2+v_i^2(\sum u_j v_j)^2-2v_iu_i(\sum v_j^2)(\sum u_j v_j)}{((\sum{u_j^2})(\sum{v_j^2})-(\sum{u_jv_j})^2)^2}=\frac{\sum v_j^2((\sum{u_j^2})(\sum{v_j^2})-(\sum{u_jv_j})^2)}{((\sum{u_j^2})(\sum{v_j^2})-(\sum{u_jv_j})^2)^2}=\frac{\sum v_j^2}{(\sum{u_j^2})(\sum{v_j^2})-(\sum{u_jv_j})^2}$
+
+$\Rightarrow Var(b_0)=\frac{\sigma^2 \sum v_j^2}{(\sum{u_j^2})(\sum{v_j^2})-(\sum{u_jv_j})^2}$
+\end{flushleft}
+
+به طریق مشابه:
+\begin{flushleft}
+$Var(b_1)=\frac{\sigma^2\sum u_j^2}{(\sum{u_j^2})(\sum{v_j^2})-(\sum{u_jv_j})^2}$
+\end{flushleft}
+\subsection*{مسأله ۳}
+از توزیع $F$ استفاده می کنیم.
+
+فرض صفر این است که مدل اول از مدل دوم بهتر فیت نشده است.
+\begin{flushleft}
+$F=\frac{\frac{S_1-S_2}{(n-k_1)-(n-k_2)}}{\frac{S_2}{n-k_2}}=\frac{\frac{795-783}{(200-3)-(200-5)}}{\frac{783}{200-5}} = 1.4$
+
+فرض صفر را رد نمیکنیم $F_{\alpha=0.05}(2,195)=3.04223>1.4\Rightarrow $ 
+\end{flushleft}
+پس مدل اول بهتر از مدل دوم فیت نشده یا به عبارتی دلایل آماری کافی برای رد این فرض که مدل اول بهتر از مدل دوم فیت نشده وجود ندارد.
+\subsection*{مسأله 4}
+الف)
+
+امکان دارد که چند جفت از این ۵ متغیر رابطه ای خطی با هم دیگر داشته باشند طوری که درواقع اگر رگرسیون چند گانه ای برای این متغیر ها بررسی می شد، یکی از این متغیرها تاثیر مستقیم نداشته باشند.
+
+یا برای مثال یکی از متغیرهایی که تاثیرش رد شد، به دو متغیر دیکر بستگی داشته باشد و تاثیر دو متغیر دیگر در این متغیر نتیجه داده باشد که شیب رگرسیون ساده برابر صفر است ولی اگر رگرسیون چندگانه استفاده می شد، شیب صفر نمی شد.
+
+ب)
+
+بهتر است رابطه ی رگرسیون چندگانه ای با ۲۰ متغیر مورد بررسی فیت کند و بررسی کند که شیب کدام یک از متغیرها برابر صفر می شود. همچنین رابطه ی علت معلولی بین ۱۰۰ متغیر بررسی شود و متغیر های کاملا یکسان از مدل حذف شوند.
+
+\subsection*{مسأله ۵}
+الف)
+\begin{flushleft}
+$b=\frac{\sum x_i y_i}{\sum x_i^2},\ SE=\frac{s}{\sqrt{\sum x_i^2}}\Rightarrow b=800 , SE=\frac{7300}{30}=243.3,\ t_{0.025, df=48}=2.01$
+
+$\beta=b \pm t_{0.025}SE=800 \pm 489.1$
+\end{flushleft}
+ب)
+
+بله چون صفر در بازه ی اطمینان شیب نیست و به عبارتی دیگر $p-vlaue$ برای شیب از $0.05$  کمتر است.
+
+ج)
+
+\begin{flushleft}
+$Y_0=(a+bX_0)\pm t_{0.025}s\sqrt{1+\frac{1}{n}+\frac{(X-X_0)^2}{\sum x^2}}$
+
+$Y_0=2000 \pm 2.01\times 7300 \times \sqrt{1+\frac{1}{50}+\frac{1}{900}}=2000\pm 14827$
+\end{flushleft}
+د)
+
+بله. البته در صورتی که فرض کنیم تمام پارامتر های دیگر که امکان دارد تاثیر بگذارند(برای مثال رنگ پوست یا شغل پدر یا تعداد فرزند یا ..) را ثابت فرض کنیم و فقط تاثیر متغیر مورد بررسی را درنظر بگیریم.
+\end{document}

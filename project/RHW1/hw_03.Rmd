@@ -1,0 +1,292 @@
+---
+title: "Programming Homework"
+subtitle: "Statistics 98"
+author: "Alireza Darvishi"
+date: "`r Sys.time()`"
+output:
+  prettydoc::html_pretty:
+    theme: architect
+    highlight: null
+---
+
+<div align="center" font>
+<img  src="images/im01.jpg"  align = 'center'>
+</div>
+<h1 dir="LTR"> 
+<font face="chalkboard">
+programming Homework: US Air pollution 
+</font>
+</h1>
+
+<p dir="RTL"> 
+<font face="b nazanin">
+با استفاده از داده های آلودگی هوای آمریکا در سال ۲۰۱۸ به سوالات زیر پاسخ دهید.
+برای تصویرسازی از پکیج ggplot2 استفاده کنید.
+</font>
+</p>
+
+<p dir="RTL"> 
+<font face="b kamran">
+ابتدا فایل دیتای مورد بررسی را لود می کنیم و سپس پکیج های مورد استفاده را لود می کنیم.
+</font>
+</p>
+
+```{r message=FALSE}
+data<-read.csv(file = "./daily_aqi_by_county_2018.csv")
+library(dplyr)
+library(ggplot2)
+library(usmap)
+library(tidyr)
+```
+
+
+***
+<p dir="RTL">
+<font face="b nazanin">
+۱. آلوده ترین منطقه، چه منطقه ای بوده است؟ نمودار ستونی ۲۰ منطقه با بیشترین آلودگی را رسم کنید.
+این کار را برای ایالتها نیز تکرار کنید.
+</font>
+</p>
+
+***
+
+<p dir="RTL"> 
+<font face="b kamran">
+برای بدست آوردن آلوده ترین منطقه با استفاده از دستور group_by و سپس بدست آوردن بیشینه ی آلودگی ها، اسم بخشی که بیشینه ی آلودگی دارد را پیدا می کنیم.
+</p>
+<p dir="RTL">
+برای کشیدن نمودار ستونی ۲۰ آلودگی بیشینه کاری مشابه با قبل انجام می دهیم اما این بار داده ها را با آلودگی ترتیب می دهیم و نمودار میله ای را رسم  می کنیم.
+</p>
+<p dir="RTL">
+برای رسم نمودار میله ای از پکیج ggplot2 استفاده می کنیم.
+</p>
+<p dir="RTL">
+برای نمودار مشابه برای ایالت ها فقط روی ایالت ها گروه بندی انجام می دهیم.
+</font>
+</p>
+***
+```{r most-polluted}
+# data %>% group_by(State.Name,county.Name) %>% summarise(AQI=max(AQI))
+data %>% group_by(State.Name,county.Name) %>% summarise(AQI=mean(AQI)) %>% .[which.max(.$AQI),] %>% .[2] %>% print(.,max.levels=0)
+data %>% group_by(State.Name,county.Name) %>% summarise(AQI=mean(AQI)) %>% .[order(.$AQI,decreasing = TRUE),] %>% .[1:20,] %>% ggplot(., aes(x=reorder((function (x) substr(x,1,10))(county.Name),-AQI), y=AQI)) +geom_bar(stat="identity",color="darkblue",fill="blue")+labs(x="county",title = "Top 20 counties in AQI")+theme(axis.text.x = element_text(angle=90))
+data %>% group_by(State.Name) %>% summarise(AQI=mean(AQI)) %>% .[order(.$AQI,decreasing = TRUE),] %>% .[1:20,] %>% ggplot(., aes(x=reorder((function (x) substr(x,1,10))(State.Name),-AQI), y=AQI)) +geom_bar(stat="identity",color="darkblue",fill="blue")+labs(x="state",title = "Top 20 States in AQI")+theme(axis.text.x = element_text(angle=90))
+```
+
+<p dir="RTL">
+<font face="b nazanin">
+۲. نمودار جعبه ای آلودگی هوا را بر حسب درجه کیفی آلودگی هوا(Category) رسم کنید.
+</font>
+</p>
+***
+<p dir="RTL"> 
+<font face="b kamran">
+با استفاده از پیکیج ggplot داده ها را به صورت نمودارهای جعبه نمایش می دهیم.
+</p>
+<p dir="RTL">
+داده ها  را بر اساس نوع آلودگی دسته بندی میکنیم و بر اساس آلودگی مرتب می کنیم.
+</font>
+</p>
+***
+```{r category-plot}
+data %>% ggplot(., aes(group =Category,x=reorder(Category,AQI), y=AQI)) + geom_boxplot() +labs(x="Category",title = "Box plot for AQI Vs Category") + theme(axis.text.x = element_text(angle=7))
+```
+
+<p dir="RTL">
+<font face="b nazanin">
+۳. نمودار خطی میانگین آلودگی هوای امریکا را بر حسب زمان رسم کنید.
+</font>
+</p>
+
+***
+<p dir="RTL"> 
+<font face="b kamran">
+میانگین آلودگی بر حسب زمان را بدست میآوریم و نمودار آلودگی بر حسب زمان را رسم میکنیم.
+</p>
+<p dir="RTL">
+برای بدستآوردن میانگین آلودگی برحسب زمان از group_by روی Date استفاده میکنیم.
+</font>
+</p>
+***
+```{r AQI-time-plot}
+data %>% group_by(Date) %>% summarise(.,meanAQI=mean(AQI)) %>% mutate(.,Days=as.Date(Date)) %>% ggplot(.,aes(x=Days,y=meanAQI))+geom_point()+geom_line()
+```
+
+
+
+<p dir="RTL">
+<font face="b nazanin">
+۴. نمودار ستونی مهمترین آلاینده های هوای واشنگتن را رسم کنید و بگویید که مهم ترین آلاینده هوای واشنگتن چه آلاینده ای است
+</font>
+</p>
+
+***
+<p dir="RTL"> 
+<font face="b kamran">
+ابتدا دادههای واشنگتن را جدا میکنیم و سپس از group_by روی پارامتر آلوده کننده استفاده میکنیم و نمودار خواسته شده را با ggplot رسم می کنیم.
+<br>
+همانطور که از نمودار دیده میشود مهمترین دلیل آلودگی ozon است.
+</p>
+</font>
+
+***
+```{r Defining-parameter-plot}
+#data %>% filter(.,county.Name=="Washington") %>% group_by(Defining.Parameter) %>% summarise(days=n()) %>% View()
+data %>% filter(.,county.Name=="Washington") %>% group_by(Defining.Parameter) %>% ggplot(.,aes(x=Defining.Parameter))+geom_bar()+labs(y="number of occurrence",x="Defining parameter",title="column bar for Defining parmeter")
+```
+
+
+<p dir="RTL">
+<font face="b nazanin">
+۵. میخواهیم بازه اطمینانی نود و پنج درصدی برای میانگین آلودگی هوای هر منطقه به دست بیاوریم.
+یک dataframe جدید بسازید که در آن مقابل اسم هر منطقه، ابتدا و انتهای بازه اطمینان در دو ستون مختلف نوشته شده باشد.
+</font>
+</p>
+
+***
+<p dir="RTL"> 
+<font face="b kamran">
+برای بدست آوردن بازه ی اطمینانی برای آلودگی هوا اول دیتا را روی منطقه دسته بندی میکنیم و سپس میانگین و بازه ی اطمینان را با استفاده از یک تست آماری بدست میآوریم. فرض میکنیم میانگین از تابع توزیع t پیروی میکند.
+</p>
+</font>
+
+***
+```{r confidence-interval}
+data %>% group_by(county.Name) %>% summarise(mean=mean(AQI),lowerbound=t.test(AQI)$conf.int[1],upperbound=t.test(AQI)$conf.int[2])
+```
+
+
+<p dir="RTL">
+<font face="b nazanin">
+۶. با طراحی آزمون فرض، این ادعا را بررسی کنید:
+<br>
+«در زمستان، هوا از تابستان آلوده تر است.»
+</font>
+</p>
+
+***
+<p dir="RTL"> 
+<font face="b kamran">
+ابتدا دادههای تابستان و زمستان را به صورت جاگانه بدست میآوریم.
+<br>
+سپس به دو طریق آزمون فرض را انجام می دهیم. یکی اینکه دادههای هر منطقه را در زمستان و تابستان با هم مقایسه کنیم و ببینیم که آیا آلودگی در هر منطقه بین دو فصل فرقی دارد یا خیر که این یعنی Pair هستند داده ها.
+<br>
+روش دیگر این است که داده ها را به صورت Pair نگاه نکنیم و میانگین آلودگی در هر فصل را به عنوان یک متغیر تصادفی در نظر بگیریم و بدست آوریم که میانگین این دو متغیر تصادفی با هم متفاوت است یا خیر
+<br>
+هرچند راه اول درست تر بنظر میآید اما هر دو راه با فرض جایگزین داده شده برای فرض صفر که آلودگی تابستان و زمستان فرقی ندارد، نتیجه میدهند که آلودگی تابستان و زمستان فرقی ندارند.
+</p>
+</font>
+
+***
+```{r hypothesis-testing-winter-summer-greater}
+summer_data <- data %>% filter(as.Date(Date)>=as.Date("2018-07-01") & as.Date(Date)<as.Date("2018-10-01")) %>% group_by(county.Name) %>% summarise("mean_AQI_in_summer"=mean(AQI))
+winter_data <- data %>% filter(as.Date(Date)>=as.Date("2018-01-01") & as.Date(Date)<as.Date("2019-04-01")) %>% group_by(county.Name) %>% summarise("mean_AQI_in_winter"=mean(AQI))
+merge(winter_data,summer_data,"county.Name") %>% with(.,t.test(mean_AQI_in_winter,mean_AQI_in_summer,paired = TRUE,alternative = "greater"))
+t.test(winter_data$mean_AQI_in_winter,summer_data$mean_AQI_in_summer,alternative = "greater")
+```
+<p dir="RTL">
+<font face="b nazanin">
+۷. با طراحی آزمون فرض، این ادعا را بررسی کنید:
+<br>
+«آلودگی هوای زمستان و تابستان با هم تفاوت دارد.»
+<br>
+نتیجه این آزمون را با بخش قبل مقایسه کنید.
+</font>
+</p>
+
+***
+<p dir="RTL"> 
+<font face="b kamran">
+این بار از دادههای بخش قبلی استفاده میکنیم و به طریق مشابه آزمون فرض مشابه انجام میدهیم و نتیجه متفاوتی از بخش قبلی میگیریم و بدست میآوریم که فرض صفر عدم تفاوت آلودگی با فرض مخالف وجود تفاوت آلودگی با خطای بسیار کم رد میشود. این یعنی آلودگی در تابستان و زمستان متفاوت است.
+</p>
+</font>
+
+***
+```{r hypothesis-testing-summer-winter-equal}
+merge(winter_data,summer_data,"county.Name") %>% with(.,t.test(mean_AQI_in_winter,mean_AQI_in_summer,paired = TRUE))
+t.test(winter_data$mean_AQI_in_winter,summer_data$mean_AQI_in_summer)
+```
+
+
+<p dir="RTL">
+<font face="b nazanin">
+۸. با طراحی آزمون فرض، این ادعا را بررسی کنید:
+<br>
+«آلودگی هوای تگزاس و میشیگان، تفاوت معناداری با هم ندارد.»
+</font>
+</p>
+
+***
+
+<p dir="RTL"> 
+<font face="b kamran">
+در هر روز، آلودگی میانگین هوا در هر یک از دو ایالت را بدست میآوریم.
+<br>
+سپس در هر روز خاص، اختلاف این میانگین در میشیگان و تگزاس را به عنوان یک متغیر در نظر میگیریم و با آزمون فرض بررسی میکنیم آیا این میانگین صفر است. به این شکل که فرض صفر این است که اختلاف آلودگی در هر روز صفر است و فرض مخالف این است که این دو میانگین متفاوت هستند.
+<br>
+نتیجه این است که میانگین آلودگی در هر روز متفاوت نیست و فرض صفر رد نمیشود.
+</p>
+</font>
+
+***
+```{r hypothesis-testing-2states-equal}
+merge( data %>% filter(State.Name=="Michigan") %>% group_by(Date) %>% summarise(mean_AQI_in_Michigans=mean(AQI)) , data %>% filter(State.Name=="Texas") %>% group_by(Date) %>% summarise(mean_AQI_in_Texas=mean(AQI)) ,"Date") %>% with(.,t.test(mean_AQI_in_Michigans,mean_AQI_in_Texas,paired = TRUE))
+```
+
+<p dir="RTL">
+<font face="b nazanin">
+۹. با استفاده از تحلیل واریانس و محاسبه آماره ی F و p-value فرضیه زیر را بررسی کنید.
+<br>
+«آلودگی هوای سه ایالت کالیفرنیا، نیویورک و آلاباما تفاوت معناداری ندارد.»
+</font>
+</p>
+
+***
+
+<p dir="RTL"> 
+<font face="b kamran">
+ابتدا با فیلتر روی نام ایالت دادههای ایالت های مورد نظر را جدا میکنیم. سپس میانگین آلودگی در هرروز برای آن ایالت را بدست می آوریم. حال از آزمون F استفاده میکنیم و p-value ای که بدست میآوریم بسیار کوچک است.
+<br>
+این یعنی فرض صفر که یکسان بودن میانگین آلودگی است رد میشود.
+<br>
+و میتوانیم بگوییم میانگین آلودگیها یکسان نیست.
+</p>
+</font>
+
+***
+```{r hypothesis-testing-3states-equal}
+data %>% filter(State.Name=="California" | State.Name=="New York" | State.Name=="Alabama") %>% group_by(.,State.Name,Date) %>% summarise(mean_AQI=mean(AQI)) %>% aov(mean_AQI~State.Name,data=.) %>% summary(.)
+```
+
+<p dir="RTL">
+<font face="b nazanin">
+۱۰. سه آماره به همراه نمودار جالب استخراج کنید.
+</font>
+</p>
+
+***
+
+<p dir="RTL"> 
+<font face="b kamran">
+در نمودار اول، تعداد سایتهای ثبت داده برحسب تعداد بارهایی که این اتفاق افتاده رسم شده که نزولی است!
+<br>
+در نمودار دوم درصد مناطق برحسب کتگوری و برحسب زمان رسم شده اند.
+<br>
+در نمودار سوم و چهارم، مهمترین آلاینده در هر منطقه و ایالت بدست آمده و روی نقشه ی آمریکا گذاشته شده است!
+<br>
+دلیل عدم وجود دیتای کافی در نقشه ی اول، عدم وجود داده برای تمام مناطق است.
+</p>
+</font>
+
+***
+```{r new stats}
+data  %>% ggplot(aes(group=Number.of.Sites.Reporting,x=Number.of.Sites.Reporting))+geom_bar()+labs(x="Number of sites reportng", title = "Number of data vs number of sites reporting",y="Count of data")
+
+data %>% group_by(Date,Category) %>% summarise(n=n()) %>% mutate(percentage=100*n/sum(n)) %>% ggplot(aes(fill=Category,x=as.Date(Date),y=percentage))+geom_area()+labs(x="Date",title = "Percentage of each Category in time")
+
+data %>% filter(State.Name!="Alaska" & State.Name!="Illinois" & State.Name!="Louisiana" &State.Name!="Maryland" & State.Name!="Minnesota" & State.Name!="Missouri"&State.Name!="Virginia") %>% group_by(State.Name,county.Name,Defining.Parameter) %>% summarise(n=n()) %>%  mutate(most_important=Defining.Parameter[which.max(n)]) %>% summarise(most_important=most_important[1]) %>% ungroup() %>% rowwise() %>% mutate(fips=fips(State.Name)) %>% drop_na() %>% rowwise() %>% mutate(fips=fips(State.Name,county = county.Name)) %>% plot_usmap(data=.,values="most_important")
+
+data  %>% group_by(State.Name,Defining.Parameter) %>% summarise(n=n()) %>%  mutate(most_important=Defining.Parameter[which.max(n)]) %>% summarise(most_important=most_important[1]) %>% ungroup() %>% rowwise() %>% mutate(fips=fips(State.Name)) %>% drop_na() %>% plot_usmap(data=.,values="most_important")
+```
+
+
+
